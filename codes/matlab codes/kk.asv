@@ -1,0 +1,31 @@
+%% 导入文本文件中的数据。
+
+filename = 'E:\matlab study\数据分析\urban.dat';
+delimiter = ' ';
+startRow = 2;
+formatSpec = '%*q%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%[^\n\r]';
+% 打开文本文件。
+fileID = fopen(filename,'r');
+%根据格式字符串读取数据列。
+dataArray = textscan(fileID, formatSpec, 'Delimiter', delimiter, 'MultipleDelimsAsOne', true, 'HeaderLines' ,startRow-1, 'ReturnOnError', false);
+
+%% 关闭文本文件。
+fclose(fileID);
+
+%% 对无法导入的数据进行的后处理。
+% 在导入过程中未应用无法导入的数据的规则，因此不包括后处理代码。要生成适用于无法导入的数据的代码，请在文件中选择无法导入的元胞，然后重新生成脚本。
+
+%% 创建输出变量
+urban = [dataArray{1:end-1}];
+%% 清除临时变量
+clearvars filename delimiter startRow formatSpec fileID dataArray ans;
+nbins = size(urban,1)*size(urban,2);
+figure(1);
+subplot(2,2,1)
+hist_GUA_1 = histogram(urban,nbins);
+xlabel('Number');
+ylabel('Histogram');
+title('Complete Histogram')
+subplot(2,2,2)
+
+
